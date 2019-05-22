@@ -2,7 +2,7 @@
 .idea/
 data/*
 models/*
-notebooks/logs/*
+#notebooks/logs/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
