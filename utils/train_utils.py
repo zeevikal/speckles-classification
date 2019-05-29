@@ -54,7 +54,7 @@ def prep_data_train_test(dates, labels, x_data=[], y_data=[]):
 
 
 def prep_data_train_val_test(dates, labels, data_path='../data/frames', frames_size=32, valid_and_test=VALID_AND_TEST,
-                             valid_precent_split=VALID_PERCENT_SPLIT):
+                             valid_precent_split=VALID_PERCENT_SPLIT, is_dim_3d=False):
     x_train = []
     y_train = []
 
@@ -97,6 +97,11 @@ def prep_data_train_val_test(dates, labels, data_path='../data/frames', frames_s
     y_test = np.asarray(y_test)
     x_train = np.asarray(x_train)
     y_train = np.asarray(y_train)
+
+    if is_dim_3d:
+        x_train = np.reshape(x_train, [x_train.shape[0], x_train.shape[1], x_train.shape[2], 1])
+        x_test = np.reshape(x_test, [x_test.shape[0], x_test.shape[1], x_test.shape[2], 1])
+        x_valid = np.reshape(x_valid, [x_valid.shape[0], x_valid.shape[1], x_valid.shape[2], 1])
 
     return x_train, x_valid, x_test, y_train, y_valid, y_test
 

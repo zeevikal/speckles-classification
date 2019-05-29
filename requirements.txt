@@ -1,6 +1,6 @@
-Package              Version 
+Package              Version
 -------------------- --------
-absl-py              0.7.1   
+absl-py              0.7.1
 appnope              0.1.0   
 astor                0.7.1   
 attrs                19.1.0  
