@@ -10,9 +10,10 @@ import itertools
 import datetime
 import glob
 import cv2
-import os
 
 from utils.data_prep_utils import LABELS
+
+np.random.seed(7)
 
 CONF_LIST = [
     [32, 512, 0.2],
@@ -118,18 +119,16 @@ def print_unique_data(y_test):
 
 def set_curr_time():
     dt = datetime.datetime.now()
-    curr_dt = '{0}{1}{2}_{3}_{4}'.format(datetime.datetime.now().year, datetime.datetime.now().month,
-                                         datetime.datetime.now().day, datetime.datetime.now().hour,
-                                         datetime.datetime.now().minute)
+    curr_dt = '{0}{1}{2}_{3}_{4}'.format(dt.year, dt.month, dt.day, dt.hour, dt.minute)
     return curr_dt
 
 
 def custom_model(conf, labels, model_weights=None):
     model = tf.keras.models.Sequential([
         tf.keras.layers.Flatten(input_shape=(conf[0], conf[0])),
-        tf.keras.layers.Dense(conf[1], activation=tf.nn.elu),
+        tf.keras.layers.Dense(conf[1], activation=tf.nn.relu),
         tf.keras.layers.BatchNormalization(),
-        tf.keras.layers.Dense(conf[2], activation=tf.nn.elu),
+        tf.keras.layers.Dense(conf[2], activation=tf.nn.relu),
         tf.keras.layers.BatchNormalization(),
         tf.keras.layers.Dropout(conf[3]),
         tf.keras.layers.Dense(len(labels), activation=tf.nn.softmax)
@@ -143,13 +142,13 @@ def custom_model(conf, labels, model_weights=None):
     return model
 
 
-def run_custom_training(conf_list, x_train, y_train, x_test, y_test, n_epochs=50, n_batch_size=256,
+def run_custom_training(conf_list, labels,  x_train, y_train, x_test, y_test, n_epochs=50, n_batch_size=256,
                         model_path='../models', model_path_prefix=None, model_weights=None):
     for conf in conf_list:
         curr_dt = set_curr_time()
         tb_callback = tf.keras.callbacks.TensorBoard(log_dir='./logs/{0}_{1}'.format(conf, curr_dt),
                                                      histogram_freq=0, write_graph=True)
-        model = custom_model(conf, model_weights)
+        model = custom_model(conf, labels, model_weights)
         model.fit(x_train, y_train, validation_data=(x_test, y_test), batch_size=n_batch_size,
                   epochs=n_epochs, callbacks=[tb_callback])
         model.evaluate(x_test, y_test)
