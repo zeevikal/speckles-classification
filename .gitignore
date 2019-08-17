@@ -3,6 +3,7 @@
 data/*
 models/*
 notebooks/*
+logs/*
 
 training_params.json
 
