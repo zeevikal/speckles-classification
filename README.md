@@ -58,3 +58,7 @@ python run.py -m train -j training_params.json
 ```
 * `-m` is the process mode (training or testing)
 * `-j` is the json file path
+7. for test your model run:
+```
+python run.py -m test -j training_params.json
+```

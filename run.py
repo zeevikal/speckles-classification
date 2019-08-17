@@ -18,7 +18,7 @@ def parse_json(json_path):
 
 def start_train(train_dict):
     """
-    Starting the training or testing process according to training params dictionary.
+    Starting the training  process according to training params dictionary.
     :param train_dict: training params dictionary
     :return:
     """
@@ -41,6 +41,11 @@ def start_train(train_dict):
 
 
 def start_test(test_dict):
+    """
+    Starting the testing process according to training params dictionary.
+    :param test_dict:
+    :return:
+    """
     x_train, x_valid, x_test, y_train, y_valid, y_test = prep_data_train_val_test(
         dates=test_dict['dates'],
         labels=test_dict['labels'],

@@ -178,9 +178,9 @@ def custom_dnn_model(conf, labels, model_weights=None):
     """
     Deep Neural network architecture based on 'Photonic Human Identification based on
     Deep Learning of Back Scattered Laser Speckle Patterns' paper.
-    :param conf: configuration list of models hyper & learning params
-    :param labels: list of data labels
-    :param model_weights: weights of pre-trained model
+    :param conf: Configuration list of models hyper & learning params
+    :param labels: List of data labels
+    :param model_weights: Weights of pre-trained model
     :return: DNN model
     """
     model = tf.keras.models.Sequential([
@@ -205,9 +205,9 @@ def custom_cnn_model(config, labels, model_weights=None):
     """
     Convolutional Neural network architecture based on 'Photonic Human Identification based on
     Deep Learning of Back Scattered Laser Speckle Patterns' paper.
-    :param conf: configuration list of models hyper & learning params
-    :param labels: list of data labels
-    :param model_weights: weights of pre-trained model
+    :param conf: Configuration list of models hyper & learning params
+    :param labels: List of data labels
+    :param model_weights: Weights of pre-trained model
     :return: CNN model
     """
     model = tf.keras.models.Sequential([
@@ -242,7 +242,7 @@ def run_custom_training(conf_list, labels, x_train, y_train, x_test, y_test, n_e
     Tensorboard callback is enabled and a log file saved according to the configuration file.
     Finally, the model is saved according to its name and a given path.
     :param conf_list: model params configuration list
-    :param labels: list of data labels
+    :param labels: List of data labels
     :param x_train: training set data
     :param y_train: training set labels
     :param x_test: validation set data
@@ -251,8 +251,8 @@ def run_custom_training(conf_list, labels, x_train, y_train, x_test, y_test, n_e
     :param n_batch_size: batch size
     :param model_path: path to save model file
     :param is_dnn: if True a DNN custom function will be called, else CNN function will be called
-    :param model_path_prefix: save model file name prefix
-    :param model_weights: path to pre-trained model. if None, initialize models weighs from scratch.
+    :param model_path_prefix: Save model file name prefix
+    :param model_weights: Path to pre-trained model. if None, initialize models weighs from scratch.
     :return:
     """
     for conf in conf_list:
@@ -278,7 +278,7 @@ def prep_confusion_matrix(y_test, test_predictions, labels, is_return=False):
     the test set of results (predictions).
     :param y_test: test set labels
     :param test_predictions: models predictions list
-    :param labels: list of data labels
+    :param labels: List of data labels
     :param is_return: if True, we'll return the Confusion Matrix DataFrame
     :return: Confusion Matrix DataFrame (if is_return is True)
     """
@@ -295,10 +295,10 @@ def prep_predicted_dict(labels, dates, categorized_frames_path='../data/categori
                         frame_size=32):
     """
     Prepare redicted dictionary
-    :param labels:
-    :param dates:
-    :param categorized_frames_path:
-    :param frame_size:
+    :param labels: List of data labels
+    :param dates: The dates on which the data was collected
+    :param categorized_frames_path: categorized frames data path
+    :param frame_size: frame size
     :return:
     """
     dd = {}
@@ -319,6 +319,13 @@ def prep_predicted_dict(labels, dates, categorized_frames_path='../data/categori
 
 
 def plot_per_category(labels, dd, loaded_model):
+    """
+    Plot 1st graph according to our paper
+    :param labels: List of data labels
+    :param dd: Data dictionary for plotting
+    :param loaded_model: trained loaded model
+    :return:
+    """
     for k, v in tqdm(dd.items()):
         for kk, vv in v.items():
             if len(vv['x']) > 0:
@@ -346,6 +353,13 @@ def plot_per_category(labels, dd, loaded_model):
 
 
 def plot_one_vs_all(labels, dd, loaded_model):
+    """
+    Plot 2nd graph according to our paper
+    :param labels: List of data labels
+    :param dd: Data dictionary for plotting
+    :param loaded_model: trained loaded model
+    :return:
+    """
     for k, v in tqdm(dd.items()):
         for kk, vv in v.items():
             if len(vv['x']) > 0:
@@ -382,6 +396,18 @@ def plot_one_vs_all(labels, dd, loaded_model):
 
 def test_model(pre_trained_model_path, labels, dates, categorized_frames_path,
                frame_size, x_test, y_test, to_plot=True):
+    """
+    run test process on trained model with or without plotting
+    :param pre_trained_model_path: pre-trained model path
+    :param labels: List of data labels
+    :param dates: The dates on which the data was collected
+    :param categorized_frames_path: categorized frames data path
+    :param frame_size: frame size
+    :param x_test: validation set data
+    :param y_test: validation set labels
+    :param to_plot: if True, will plot graphs (according to our paper)
+    :return:
+    """
     loaded_model = tf.keras.models.load_model(pre_trained_model_path)
     print(loaded_model.summary())
     test_predictions = loaded_model.predict(x_test)
