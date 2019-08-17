@@ -1,6 +1,8 @@
 # Speckles-classification
 Python implementation of our paper: [Photonic Human Identification based on Deep Learning of Back Scattered Laser Speckle Patterns](paper_link).
 
+This project is our final project in [CS231n-TLV (MDLI)](https://machinelearning.co.il/3653/dlcourse-final-2/) Course.
+We would like to thank Professor Zeev Zalevski for his guidance, support and help throughout the process! 
 ### Abstract
 The analysis of the dynamics of speckle patterns that are generated when laser light is back scattered from a tissue has been recently shown as very applicable for remote sensing of various bio-medical parameters. In this work we present how analysis of a static single speckle pattern scattered from the forehead of a subject, together with advanced machine learning techniques based on multilayered neural networks, can offer novel approach to accurate identification within a small predefined number of classes (e.g. a ‘smart home’ setting which restricts its operations for family members only). Processing the static scattering speckle pattern by neural networks enables extraction of unique features with no previous expert knowledge being required. Using the right model allows for a very accurate differentiation between classes and it can form a basis for using speckles patterns as a form of identity measure of ‘forehead-print’.
 
@@ -64,4 +66,4 @@ python run.py -m test -j training_params.json
 ```
 
 ### Training on your own data
-This project is licensed under the terms of the [MIT license](LICENSE.md).
+This project is licensed under the terms of the [MIT license](https://github.com/zeevikal/speckles-classification/blob/master/LICENSE).
