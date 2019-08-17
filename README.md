@@ -62,3 +62,6 @@ python run.py -m train -j training_params.json
 ```
 python run.py -m test -j training_params.json
 ```
+
+### Training on your own data
+This project is licensed under the terms of the [MIT license](LICENSE.md).
