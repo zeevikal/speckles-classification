@@ -2,7 +2,9 @@
 .idea/
 data/*
 models/*
-#notebooks/logs/*
+notebooks/*
+
+training_params.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
