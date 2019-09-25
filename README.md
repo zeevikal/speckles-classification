@@ -8,9 +8,15 @@ The analysis of the dynamics of speckle patterns that are generated when laser l
 
 ### Models Architecture
 ##### DNN architecture
-![DNN architecture](dnn_img.jpeg)
+![DNN architecture](images/DNN.png)
 ##### CNN architecture
-![CNN architecture](cnn_img.jpeg)
+![CNN architecture](images/CNN.png)
+
+### Results (on our data)
+##### Accuracy rates of classifying correctly each class within every physical subset of it
+![Accuracy rates of classifying correctly each class within every physical subset of it](images/fig4.png)
+##### Accuracy rates of classifying correctly each class as opposed to false negative classification rate
+![Accuracy rates of classifying correctly each class as opposed to false negative classification rate](images/fig5.png)
 
 ### Training on your own data
 1. Create python 3 environment (with virtuelenv / conda) 
@@ -21,11 +27,11 @@ The analysis of the dynamics of speckle patterns that are generated when laser l
 ```json
 {
 	"train": {
-		"model_path_prefix": "new_model",
+		"model_path_prefix": "5_lbls_relu",
 		"model_path": "models",
 		"dates": ["24032019", "17042019", "01052019"],
-		"labels": ["label1", "label2", "label3", "label4", "label5"],
-		"pre_trained_model_path": "models/pre_trained_model.h5",
+		"labels": ["zeev", "or", "ron", "aviya", "felix"],
+		"pre_trained_model_path": "models/5_lbls_relu_[32, 300, 100, 0.4]_2019518_1_23.h5",
 		"data_path": "data/frames",
 		"model_weights": "None",
 		"is_dnn": "True",
@@ -45,12 +51,12 @@ The analysis of the dynamics of speckle patterns that are generated when laser l
 		"n_batch_size": 256
 	},
 	"test": {
-		"pre_trained_model_path": "models/pre_trained_model.h5",
+		"pre_trained_model_path": "models/5_lbls_relu_[32, 300, 100, 0.4]_2019518_1_23.h5",
 		"dates": ["24032019", "17042019", "01052019"],
-		"labels": ["label1", "label2", "label3", "label4", "label5"],
+		"labels": ["zeev", "or", "ron", "aviya", "felix"],
 		"data_path": "data/frames",
 		"categorized_frames_path": "data/categorized_frames",
-		"is_dim_3d": "False",
+		"is_cnn": "False",
 		"to_plot": "True",
 		"frame_size": 32
 	}

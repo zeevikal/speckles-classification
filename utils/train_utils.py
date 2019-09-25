@@ -17,17 +17,23 @@ np.random.seed(7)
 
 # configuration list for grid search (DNN & CNN)
 DNN_CONF_LIST = [
-    [32, 512, 0.2],
-    [32, 256, 0.2],
-    [32, 512, 0.1],
+    [32, 256, 256, 0.2],
+    [32, 512, 512, 0.1],
+    [32, 512, 512, 0.2],
+    [32, 300, 100, 0.2],
+    [32, 300, 100, 0.4],
+    [32, 512, 256, 0.4],
+    [32, 512, 256, 0.2],
+    [32, 256, 128, 0.4],
+    [32, 256, 128, 0.2]
 ]
 CNN_CONF_LIST = [
-    [64, 3, 2, 0.4, 256, 0.4, 128, 0.4],
-    [32, 3, 2, 0.3, 256, 0.3, 128, 0.3],
-    [64, 5, 2, 0.4, 128, 0.4, 64, 0.4],
-    [64, 5, 2, 0.4, 256, 0.4, 128, 0.4],
-    [128, 3, 2, 0.4, 256, 0.4, 128, 0.4],
-    [32, 3, 2, 0.2, 256, 0.2, 128, 0.2]
+    [32, 64, 3, 2, 0.4, 256, 0.4, 128, 0.4],
+    [32, 32, 3, 2, 0.3, 256, 0.3, 128, 0.3],
+    [32, 64, 5, 2, 0.4, 128, 0.4, 64, 0.4],
+    [32, 64, 5, 2, 0.4, 256, 0.4, 128, 0.4],
+    [32, 128, 3, 2, 0.4, 256, 0.4, 128, 0.4],
+    [32, 32, 3, 2, 0.2, 256, 0.2, 128, 0.2]
 ]
 
 # training params
@@ -79,7 +85,7 @@ def prep_data_train_test(dates, labels, x_data=[], y_data=[]):
 
 
 def prep_data_train_val_test(dates, labels, data_path='../data/frames', frames_size=32, valid_and_test=VALID_AND_TEST,
-                             valid_precent_split=VALID_PERCENT_SPLIT, is_dim_3d=False):
+                             valid_precent_split=VALID_PERCENT_SPLIT, is_cnn=False):
     """
     Prepare train, validation and test datasets for training process,
     according to the data structure.
@@ -89,7 +95,7 @@ def prep_data_train_val_test(dates, labels, data_path='../data/frames', frames_s
     :param frames_size: frame size param (32, 64 or 128)
     :param valid_and_test: [training] & [val, test] data split ration
     :param valid_precent_split: [val] & [test] data split ration
-    :param is_dim_3d: True if frames data is three-dimensional structure, else (2D) False
+    :param is_cnn: True if frames data are for CNN architecture, else (for DNN) False
     :return: train, validation and test datasets - x_train, x_valid, x_test, y_train, y_valid, y_test
     """
     x_train = []
@@ -134,10 +140,10 @@ def prep_data_train_val_test(dates, labels, data_path='../data/frames', frames_s
     x_train = np.asarray(x_train)
     y_train = np.asarray(y_train)
 
-    if is_dim_3d:
-        x_train = np.reshape(x_train, [x_train.shape[0], x_train.shape[1], x_train.shape[2], 1])
-        x_test = np.reshape(x_test, [x_test.shape[0], x_test.shape[1], x_test.shape[2], 1])
-        x_valid = np.reshape(x_valid, [x_valid.shape[0], x_valid.shape[1], x_valid.shape[2], 1])
+    if is_cnn:
+        x_train = x_train.reshape((-1, frames_size, frames_size, 1))
+        x_valid = x_valid.reshape((-1, frames_size, frames_size, 1))
+        x_test = x_test.reshape((-1, frames_size, frames_size, 1))
 
     return x_train, x_valid, x_test, y_train, y_valid, y_test
 
@@ -211,18 +217,18 @@ def custom_cnn_model(config, labels, model_weights=None):
     :return: CNN model
     """
     model = tf.keras.models.Sequential([
-        tf.keras.layers.Conv2D(config[0], config[1]),
-        tf.keras.layers.MaxPooling2D(pool_size=(config[2], config[2])),
-        tf.keras.layers.Dropout(config[3]),
+        tf.keras.layers.Conv2D(config[1], config[2], input_shape=(config[0], config[0], 1)),
+        tf.keras.layers.MaxPooling2D(pool_size=(config[3], config[3])),
+        tf.keras.layers.Dropout(config[4]),
         tf.keras.layers.Flatten(),
-        tf.keras.layers.Dense(config[4]),
+        tf.keras.layers.Dense(config[5]),
         tf.keras.layers.BatchNormalization(),
         tf.keras.layers.Activation(activation=tf.nn.relu),
-        tf.keras.layers.Dropout(config[5]),
-        tf.keras.layers.Dense(config[6]),
+        tf.keras.layers.Dropout(config[6]),
+        tf.keras.layers.Dense(config[7]),
         tf.keras.layers.BatchNormalization(),
         tf.keras.layers.Activation(activation=tf.nn.relu),
-        tf.keras.layers.Dropout(config[7]),
+        tf.keras.layers.Dropout(config[8]),
         tf.keras.layers.Dense(len(labels), activation=tf.nn.softmax)
     ])
     if model_weights is not None:
