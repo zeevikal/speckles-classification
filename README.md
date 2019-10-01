@@ -27,11 +27,11 @@ The analysis of the dynamics of speckle patterns that are generated when laser l
 ```json
 {
 	"train": {
-		"model_path_prefix": "5_lbls_relu",
+		"model_path_prefix": "your_model_path_prefix",
 		"model_path": "models",
 		"dates": ["24032019", "17042019", "01052019"],
-		"labels": ["zeev", "or", "ron", "aviya", "felix"],
-		"pre_trained_model_path": "models/5_lbls_relu_[32, 300, 100, 0.4]_2019518_1_23.h5",
+		"labels": ["label1", "label2", "label3", "label4", "label5"],
+		"pre_trained_model_path": "path/to/pre_trained_model.h5",
 		"data_path": "data/frames",
 		"model_weights": "None",
 		"is_dnn": "True",
@@ -51,9 +51,9 @@ The analysis of the dynamics of speckle patterns that are generated when laser l
 		"n_batch_size": 256
 	},
 	"test": {
-		"pre_trained_model_path": "models/5_lbls_relu_[32, 300, 100, 0.4]_2019518_1_23.h5",
+		"pre_trained_model_path": "path/to/pre_trained_model.h5",
 		"dates": ["24032019", "17042019", "01052019"],
-		"labels": ["zeev", "or", "ron", "aviya", "felix"],
+		"labels": ["label1", "label2", "label3", "label4", "label5"],
 		"data_path": "data/frames",
 		"categorized_frames_path": "data/categorized_frames",
 		"is_cnn": "False",
