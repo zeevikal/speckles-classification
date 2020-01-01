@@ -1,5 +1,5 @@
 # Speckles-classification
-Python implementation of our paper: [Photonic Human Identification based on Deep Learning of Back Scattered Laser Speckle Patterns](https://github.com/zeevikal/speckles-classification).
+Python implementation of our paper: [Photonic Human Identification based on Deep Learning of Back Scattered Laser Speckle Patterns](https://www.osapublishing.org/oe/abstract.cfm?uri=oe-27-24-36002).
 
 This project is our final project in [CS231n-TLV (MDLI)](https://machinelearning.co.il/3653/dlcourse-final-2/) Course.
 We would like to thank Professor Zeev Zalevsky for his guidance, support and help throughout the process! 
